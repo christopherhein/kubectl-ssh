@@ -36,19 +36,21 @@ following.
 
 [source,shell]
 ----
-$ kubectl plugin ssh --help
-Opens up an SSH connection to the node that you pass into the command, allowing you to work faster
-without writing out the full ssh command.
+Opens up an SSH connection to the node that you pass into the command, allowing you to work faster without writing out
+the full ssh command.
 
 Examples:
   kubectl plugin ssh <node-name>
 
 Options:
   -i, --identity-file='~/.ssh/id_rsa': Identity file to use for the ssh command.
+  -l, --selector='': Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
   -u, --ssh-user='admin': User to use for the ssh command.
 
 Usage:
   kubectl plugin ssh [flags] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
 ----
 
 == Roadmap
