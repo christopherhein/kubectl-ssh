@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ]
+if [ "$KUBECTL_PLUGINS_LOCAL_FLAG_SELECTOR" == "" ] && [ -z "$1" ]
 then
   echo "Node name cannot be empty"
   exit 1
 else
-  hostname=$(kubectl get node $1 -o jsonpath="{.status.addresses[?(.type=='ExternalDNS')].address}")
+  if [ "$KUBECTL_PLUGINS_LOCAL_FLAG_SELECTOR" == "" ]
+  then
+    selector=""
+    path="{.status.addresses[?(.type=='ExternalDNS')].address}"
+  else
+    selector="-l $KUBECTL_PLUGINS_LOCAL_FLAG_SELECTOR"
+    path="{.items[0].status.addresses[?(.type=='ExternalDNS')].address}"
+  fi
+  hostname=$(kubectl get node $1 -o jsonpath="${path}" $selector)
   ssh -i ${KUBECTL_PLUGINS_LOCAL_FLAG_IDENTITY_FILE} ${KUBECTL_PLUGINS_LOCAL_FLAG_SSH_USER}@$hostname
 fi
