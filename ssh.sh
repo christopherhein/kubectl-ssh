@@ -14,5 +14,5 @@ else
     path="{.items[0].status.addresses[?(.type=='ExternalIP')].address}"
   fi
   hostname=$(kubectl get node $1 -o jsonpath="${path}" $selector)
-  [[ ! -z $hostname  ]] && ssh -i ${KUBECTL_PLUGINS_LOCAL_FLAG_IDENTITY_FILE} ${KUBECTL_PLUGINS_LOCAL_FLAG_SSH_USER}@$hostname || echo "Can't find Public DNS/IP"; exit 1;
+  [[ ! -z $hostname  ]] && ssh -i ${KUBECTL_PLUGINS_LOCAL_FLAG_IDENTITY_FILE} ${KUBECTL_PLUGINS_LOCAL_FLAG_SSH_USER}@$hostname || echo "Can't find ExternalIP"; exit 1;
 fi
